@@ -1,157 +1,122 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
-const navLinks = [
-    { id: "hero", label: "Home", iconClass: "bx bx-home" },
-    { id: "kendaraan", label: "Kendaraan", iconClass: "bx bx-car" },
-    { id: "paket-promo", label: "Paket & Promo", iconClass: "bx bx-tag" },
-    { id: "cara-booking", label: "Cara Booking", iconClass: "bx bx-book" },
-    { id: "testimoni", label: "Testimoni", iconClass: "bx bx-comment-detail" },
-    { id: "faq", label: "FAQ", iconClass: "bx bx-help-circle" },
-    { id: "kontak", label: "Kontak", iconClass: "bx bx-phone" },
+const menuItems = [
+  { id: 'hero', label: 'Home', icon: 'bx-home' },
+  { id: 'kendaraan', label: 'Kendaraan', icon: 'bx-car' },
+  { id: 'paket-promo', label: 'Paket & Promo', icon: 'bx-tag' },
+  { id: 'cara-booking', label: 'Cara Booking', icon: 'bx-book' },
+  { id: 'testimoni', label: 'Testimoni', icon: 'bx-comment-detail' },
+  { id: 'faq', label: 'FAQ', icon: 'bx-help-circle' },
+  { id: 'kontak', label: 'Kontak', icon: 'bx-phone' },
 ];
 
 const Navbar = () => {
-    const [active, setActive] = useState("hero");
-    const [navbarFixed, setNavbarFixed] = useState(false);
-    const [offcanvasShow, setOffcanvasShow] = useState(false);
-    const [userClicked, setUserClicked] = useState(false);
+  const [activeMenu, setActiveMenu] = useState('hero');
+  const [showOffcanvas, setShowOffcanvas] = useState(false);
 
-    useEffect(() => {
-        const handleScroll = () => {
-            setNavbarFixed(window.scrollY > 50);
+  const handleClickMenu = (id) => {
+    setActiveMenu(id);
+    scrollToSection(id);
+    setShowOffcanvas(false);
+  };
 
-            if (!userClicked) {
-                let current = "hero";
-                navLinks.forEach(({ id }) => {
-                    const section = document.getElementById(id);
-                    if (section) {
-                        const top = section.offsetTop - 80;
-                        if (window.scrollY >= top) {
-                            current = id;
-                        }
-                    }
-                });
-                setActive(current);
-            }
-        };
+  const scrollToSection = (id) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, [userClicked]);
-
-
-    useEffect(() => {
-        if (userClicked) {
-            const timer = setTimeout(() => setUserClicked(false), 3000);
-            return () => clearTimeout(timer);
+  useEffect(() => {
+    const handleScroll = () => {
+      let current = 'hero';
+      menuItems.forEach(({ id }) => {
+        const section = document.getElementById(id);
+        if (section && window.scrollY >= section.offsetTop - 100) {
+          current = id;
         }
-    }, [userClicked]);
-
-
-    useEffect(() => {
-        document.body.style.overflow = offcanvasShow ? "hidden" : "";
-    }, [offcanvasShow]);
-
-    const scrollToSection = (id) => {
-        const el = document.getElementById(id);
-        if (el) {
-            el.scrollIntoView({ behavior: "smooth" });
-            setActive(id);
-            setUserClicked(true);
-        }
-        setOffcanvasShow(false);
+      });
+      setActiveMenu(current);
     };
 
-    return (
-        <>
-            <nav className={`navbar navbar-expand-lg bg-white py-3 shadow ${navbarFixed ? "fixed-top" : ""}`} data-aos-duration="1000" data-aos="fade-down">
-                <div className="container">
-                    <a href="#" className="navbar-brand fw-bold d-flex align-items-center gap-1" onClick={() => scrollToSection("hero")}>
-                        <i className="bx bx-car text-danger" style={{ fontSize: '28px' }}></i>
-                        Rental <span className="text-danger">Mobil</span>
-                    </a>
-                    {/* Offcanvas toggle button */}
-                    <button
-                        className="navbar-toggler"
-                        type="button"
-                        onClick={() => setOffcanvasShow(true)}
-                        aria-controls="offcanvasNavbar"
-                        aria-expanded={offcanvasShow}
-                        aria-label="Toggle navigation"
-                    >
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-                    {/* Desktop navbar */}
-                    <div className="d-none d-lg-block">
-                        <ul className="navbar-nav ms-auto">
-                            {navLinks.map(({ id, label, iconClass }) => (
-                                <li className="nav-item" key={id}>
-                                    <a
-                                        href={`#${id}`}
-                                        className={`nav-link d-flex align-items-center gap-1 ${active === id ? "bg-danger shadow text-white rounded" : ""
-                                            }`}
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            scrollToSection(id);
-                                        }}
-                                    >
-                                        <i className={iconClass} style={{ fontSize: "20px" }}></i>
-                                        {label}
-                                    </a>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+  return (
+    <>
+      <nav className="navbar navbar-expand-lg fixed-top bg-white shadow py-3" data-aos="fade-down" data-aos-duration="1000">
+        <div className="container">
+          <a href="#" className="navbar-brand d-flex align-items-center fw-bold" onClick={() => handleClickMenu('hero')}>
+            <i className="bx bx-car me-2 text-danger"></i>
+            Rental <span className="text-danger">Mobil</span>
+          </a>
 
-            {/* Offcanvas menu for mobile */}
-            <div
-                className={`offcanvas offcanvas-end ${offcanvasShow ? "show" : ""}`} data-aos-duration="1200"
-                tabIndex="-1"
-                id="offcanvasNavbar"
-                aria-labelledby="offcanvasNavbarLabel"
-                style={{ visibility: offcanvasShow ? "visible" : "hidden", width: "75vw" }}
-            >
-                <div className="offcanvas-header">
-                    <h5 className="offcanvas-title fw-bold" id="offcanvasNavbarLabel">
-                        Rental <span className="text-danger">Mobil</span>
-                    </h5>
-                    <button type="button" className="btn-close text-reset" aria-label="Close" onClick={() => setOffcanvasShow(false)}></button>
-                </div>
-                <div className="offcanvas-body">
-                    <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
-                        {navLinks.map(({ id, label, iconClass }) => (
-                            <li className="nav-item" key={id}>
-                                <a
-                                    href={`#${id}`}
-                                    className={`nav-link d-flex align-items-center gap-2 ${active === id ? "bg-danger shadow text-white rounded" : ""
-                                        }`}
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        scrollToSection(id);
-                                    }}
-                                >
-                                    <i className={iconClass} style={{ fontSize: "22px" }}></i>
-                                    {label}
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            </div>
+          <button className="navbar-toggler border-0" type="button" onClick={() => setShowOffcanvas(true)} aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
 
-            {/* Backdrop */}
-            {offcanvasShow && (
-                <div
-                    className="offcanvas-backdrop fade show"
-                    onClick={() => setOffcanvasShow(false)}
-                    style={{ cursor: "pointer" }}
-                ></div>
-            )}
-        </>
-    );
+          <div className="collapse navbar-collapse d-none d-lg-block">
+            <ul className="navbar-nav ms-auto d-flex align-items-center gap-1">
+              {menuItems.map(({ id, label, icon }) => (
+                <li className="nav-item" key={id}>
+                  <a
+                    href={`#${id}`}
+                    className={`nav-link d-flex align-items-center ${activeMenu === id ? 'bg-danger text-white shadow rounded' : ''}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleClickMenu(id);
+                    }}
+                    style={{ padding: '8px 12px' }}
+                  >
+                    <i className={`bx ${icon} me-2`}></i>
+                    {label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      {/* Offcanvas Mobile */}
+      <div
+        className={`offcanvas offcanvas-end ${showOffcanvas ? 'show' : ''}`}
+        style={{ visibility: showOffcanvas ? 'visible' : 'hidden', width: '65vw' }}
+        tabIndex="-1"
+      >
+        <div className="offcanvas-header border-bottom">
+          <h5 className="offcanvas-title fw-bold d-flex align-items-center">
+            <i className="bx bx-car me-2 text-danger"></i>
+            Rental <span className="text-danger">Mobil</span>
+          </h5>
+          <button type="button" className="btn-close" onClick={() => setShowOffcanvas(false)} aria-label="Close"></button>
+        </div>
+        <div className="offcanvas-body p-0">
+          <ul className="navbar-nav">
+            {menuItems.map(({ id, label, icon }) => (
+              <li className="nav-item" key={id}>
+                <a
+                  href={`#${id}`}
+                  className={`nav-link d-flex align-items-center px-4 py-3 border-bottom ${activeMenu === id ? 'bg-danger text-white shadow rounded' : ''}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleClickMenu(id);
+                  }}
+                >
+                  <i className={`bx ${icon} me-3`}></i>
+                  {label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      {/* Backdrop */}
+      {showOffcanvas && <div className="offcanvas-backdrop fade show" onClick={() => setShowOffcanvas(false)} />}
+    </>
+  );
 };
 
 export default Navbar;
