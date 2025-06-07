@@ -61,7 +61,7 @@ const Hero = () => {
                                 </button>
                             </a>
                             <a href="#harga" className="text-decoration-none">
-                                <button className="btn btn-outline-primary shadow d-flex align-items-center btn-lg">
+                                <button className="btn btn-outline-danger shadow d-flex align-items-center btn-lg">
                                     <i className="bx bx-money fs-5 me-1"></i>
                                     Lihat Harga
                                 </button>
