@@ -76,6 +76,8 @@ const Hero = () => {
                                 </button>
                             </a>
                         </div>
+
+
                     </div>
 
                     <div className="col-md-6" data-aos-delay="600" data-aos="fade-left">
@@ -100,6 +102,45 @@ const Hero = () => {
 
 
                 </div>
+
+                <div className="card mt-5 shadow border-0 rounded p-4" data-aos-duration="1000" data-aos="fade-down">
+                    <div className="text-md-start mb-4">
+                        <span className="badge bg-danger mb-2 px-3 py-2 fs-6 shadow rounded">
+                            <i className="bx bx-search-alt me-1"></i>
+                            Cari Mobil Sekarang
+                        </span>
+                        <h4 className="fw-bold">Form Pencarian Rental Mobil</h4>
+                    </div>
+
+                    <form>
+                        <div className="row justify-content-center g-3">
+                            <div className="col-12 col-md-4">
+                                <input
+                                    type="text"
+                                    className="form-control shadow"
+                                    placeholder="Lokasi Penjemputan"
+                                />
+                            </div>
+                            <div className="col-6 col-md-3">
+                                <input type="date" className="form-control shadow" />
+                            </div>
+                            <div className="col-6 col-md-3">
+                                <select className="form-select shadow">
+                                    <option value="">Tipe Mobil</option>
+                                    <option value="matic">Matic</option>
+                                    <option value="manual">Manual</option>
+                                </select>
+                            </div>
+                            <div className="col-12 col-md-2">
+                                <button type="submit" className="btn btn-danger w-100 d-flex align-items-center justify-content-center shadow">
+                                    <i className="bx bx-search-alt fs-5 me-1"></i>
+                                    Cari
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
             </div>
         </section>
     )
