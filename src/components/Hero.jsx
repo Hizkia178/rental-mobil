@@ -1,3 +1,23 @@
+const services = [
+    {
+        icon: 'bx bxs-car',
+        title: 'Armada Terawat'
+    },
+    {
+        icon: 'bx bxs-wallet',
+        title: 'Harga Terjangkau'
+    },
+    {
+        icon: 'bx bx-map',
+        title: 'Antar Jemput'
+    },
+    {
+        icon: 'bx bx-time-five',
+        title: 'Layanan 24 Jam'
+    }
+];
+
+
 const Hero = () => {
     return (
         <section className="py-5 bg-white overflow-hidden" id="hero">
@@ -18,6 +38,19 @@ const Hero = () => {
                         <p className="lead text-muted mb-4">
                             Nikmati layanan rental mobil terbaik dengan armada bersih, harga terjangkau, dan proses pemesanan super mudah.
                         </p>
+
+                        <div className="row mt-5">
+                            {services.map((service, index) => (
+                                <div className="col-md-6 col-lg-3 mb-4" key={index}>
+                                    <div className="card h-100 border-0 shadow rounded text-center p-3">
+                                        <div className="d-flex align-items-center justify-content-center bg-white text-danger fs-3 mb-3 p-3 rounded-circle shadow mx-auto">
+                                            <i className={service.icon}></i>
+                                        </div>
+                                        <h6 className="fw-bold mt-2">{service.title}</h6>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
 
 
                         <div className="d-flex flex-wrap gap-3">
