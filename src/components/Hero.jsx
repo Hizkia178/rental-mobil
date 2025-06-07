@@ -23,7 +23,7 @@ const Hero = () => {
         <section className="py-5 bg-white overflow-hidden" id="hero">
             <div className="container" style={{ paddingTop: 60 }}>
                 <div className="row align-items-center">
-                    <div className="col-md-6 mb-4 mb-md-0">
+                    <div className="col-md-6 mb-4 mb-md-0" data-aos-duration="1000" data-aos="fade-up">
                         <div className="d-flex flex-wrap gap-2">
                             <span className="badge bg-danger mb-2 shadow px-3 rounded py-2 fs-6">
                                 <i className="bx bx-crown me-1"></i>
