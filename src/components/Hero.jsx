@@ -41,7 +41,7 @@ const Hero = () => {
 
                         <div className="row mt-5">
                             {services.map((service, index) => (
-                                <div className="col-md-6 col-lg-3 mb-4" key={index}>
+                                <div className="col-md-6 col-6 col-lg-3 mb-4" key={index}>
                                     <div className="card h-100 border-0 shadow rounded text-center p-3">
                                         <div className="d-flex align-items-center justify-content-center bg-white text-danger fs-3 mb-3 p-3 rounded-circle shadow mx-auto">
                                             <i className={service.icon}></i>
